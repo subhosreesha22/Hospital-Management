@@ -1,0 +1,6 @@
+{
+  "name": "Hospital Management System",
+  "description": "Healthcare & Patient Management Portal with 3D card hover effects, appointment booking, doctor schedules, patient records, and full JavaScript backend.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

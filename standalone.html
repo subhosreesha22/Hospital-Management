@@ -1,0 +1,3385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hospital Management System</title>
+  <meta name="description" content="Healthcare & Patient Management Portal with 3D card hover effects, appointment booking, doctor schedules, patient records, and full JavaScript backend." />
+  <meta property="og:title" content="Hospital Management System" />
+  <meta property="og:description" content="Healthcare & Patient Management Portal with 3D card hover effects, appointment booking, doctor schedules, patient records, and full JavaScript backend." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  
+  <!-- Font and Stylesheet in pure CSS -->
+  <style>
+/* Hospital Management System - Custom Modern CSS with 3D Effects */
+:root {
+  --primary-blue: #0077cc;
+  --dark-blue: #005fa3;
+  --deep-blue: #004080;
+  --accent-cyan: #00b4d8;
+  --light-bg: #f4f7fc;
+  --card-bg: #ffffff;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 14px 28px rgba(0, 119, 204, 0.12), 0 8px 10px rgba(0, 0, 0, 0.06);
+  --shadow-3d: 0 20px 35px -10px rgba(0, 95, 163, 0.22), 0 1px 3px rgba(0,0,0,0.05);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--light-bg);
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Emergency Bar */
+.top-bar {
+  background: #003d6b;
+  color: #e2e8f0;
+  font-size: 13px;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.top-bar-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+  color: #ffffff;
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 95, 163, 0.15);
+}
+
+header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+header p {
+  font-size: 16px;
+  color: #e0f2fe;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+/* Navigation */
+nav {
+  background: var(--dark-blue);
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 16px 20px;
+  font-weight: 600;
+  font-size: 15px;
+  display: inline-block;
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  background: #38bdf8;
+  border-radius: 3px 3px 0 0;
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #38bdf8;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-badge-btn {
+  background: #ffffff;
+  color: var(--primary-blue);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.nav-badge-btn:hover {
+  background: #e0f2fe;
+  transform: translateY(-1px);
+}
+
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+/* Hero Section with 3D Depth */
+.hero {
+  background: linear-gradient(rgba(0, 60, 110, 0.72), rgba(0, 40, 80, 0.78)),
+              url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1400') center/cover no-repeat;
+  color: #ffffff;
+  text-align: center;
+  padding: 90px 20px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 850px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #e0f2fe;
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.hero p {
+  font-size: 20px;
+  color: #f1f5f9;
+  max-width: 650px;
+  margin: 0 auto 30px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-hero-primary {
+  background: #38bdf8;
+  color: #0c4a6e;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-hero-primary:hover {
+  background: #7dd3fc;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(56, 189, 248, 0.5);
+}
+
+.btn-hero-secondary {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-size: 16px;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.btn-hero-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px);
+}
+
+/* Floating 3D Stat Bar */
+.stats-bar-wrapper {
+  max-width: 1100px;
+  margin: -40px auto 30px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.stats-bar {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 24px 30px;
+  box-shadow: var(--shadow-3d);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.stat-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-right: 1px solid #e2e8f0;
+  padding-right: 15px;
+}
+
+.stat-box:last-child {
+  border-right: none;
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: #e0f2fe;
+  color: var(--primary-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.stat-box:hover .stat-icon {
+  transform: rotateY(180deg) scale(1.1);
+  background: var(--primary-blue);
+  color: #ffffff;
+}
+
+.stat-info h3 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--dark-blue);
+  line-height: 1.1;
+}
+
+.stat-info p {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px 0 50px;
+}
+
+.section-title-wrap {
+  text-align: center;
+  margin-bottom: 35px;
+  position: relative;
+}
+
+.section-title {
+  color: var(--dark-blue);
+  font-size: 30px;
+  font-weight: 800;
+  display: inline-block;
+  position: relative;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: var(--accent-cyan);
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* 3D CARDS SECTION */
+.cards-perspective-container {
+  perspective: 1200px;
+  padding: 10px 0;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* 3D Tilt Card Component */
+.card-3d-wrap {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  border-radius: var(--radius-lg);
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 35px 25px 30px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 25px rgba(0, 95, 163, 0.08), 0 4px 6px rgba(0, 0, 0, 0.03);
+  text-align: center;
+  border: 1px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+/* 3D Specular Glare Layer */
+.card-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-3d-wrap:hover .card-glare {
+  opacity: 1;
+}
+
+.card-3d-wrap:hover .card {
+  box-shadow: 0 25px 40px -10px rgba(0, 95, 163, 0.25), 0 12px 16px -8px rgba(0, 0, 0, 0.08);
+  border-color: #93c5fd;
+}
+
+.card-icon-wrap {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  color: var(--primary-blue);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  margin-bottom: 20px;
+  transform: translateZ(35px);
+  transition: transform 0.3s ease;
+  box-shadow: 0 8px 16px rgba(0, 119, 204, 0.15);
+}
+
+.card-3d-wrap:hover .card-icon-wrap {
+  transform: translateZ(50px) scale(1.08);
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+  color: #ffffff;
+}
+
+.card h3 {
+  color: var(--dark-blue);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  transform: translateZ(25px);
+}
+
+.card p {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  transform: translateZ(15px);
+}
+
+.card-btn {
+  background: #f1f5f9;
+  color: var(--dark-blue);
+  border: 1px solid #cbd5e1;
+  padding: 10px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  transform: translateZ(20px);
+}
+
+.card-btn:hover {
+  background: var(--primary-blue);
+  color: #ffffff;
+  border-color: var(--primary-blue);
+  box-shadow: 0 4px 12px rgba(0, 119, 204, 0.3);
+  transform: translateZ(30px) translateY(-2px);
+}
+
+/* FILTER & SEARCH TOOLBAR */
+.toolbar-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+}
+
+.filter-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  background: #f1f5f9;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+  background: var(--primary-blue);
+  color: #ffffff;
+  border-color: var(--primary-blue);
+}
+
+.search-input-wrap {
+  position: relative;
+  min-width: 250px;
+}
+
+.search-input-wrap input {
+  padding: 8px 12px 8px 36px;
+  margin: 0;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  background: #f8fafc;
+  transition: var(--transition);
+}
+
+.search-input-wrap input:focus {
+  background: #ffffff;
+  border-color: var(--primary-blue);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.15);
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* SECTION TABS / SUBHEADERS */
+.section-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.action-btn-sm {
+  background: var(--primary-blue);
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.action-btn-sm:hover {
+  background: var(--dark-blue);
+  transform: translateY(-1px);
+}
+
+/* TABLES WITH 3D HOVER EFFECT */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  margin-top: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  text-align: left;
+}
+
+table th, table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 14px;
+}
+
+table th {
+  background: var(--primary-blue);
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+table tbody tr {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+table tbody tr:hover {
+  background: #f0f7ff;
+  transform: scale(1.002);
+  box-shadow: 0 4px 10px rgba(0, 119, 204, 0.08);
+  z-index: 2;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.badge-dept {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.badge-success {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.badge-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.table-btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+  margin-right: 4px;
+}
+
+.table-btn-primary {
+  background: #e0f2fe;
+  color: var(--primary-blue);
+}
+
+.table-btn-primary:hover {
+  background: var(--primary-blue);
+  color: #ffffff;
+}
+
+.table-btn-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.table-btn-danger:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+/* FORM SECTION */
+.form-section {
+  background: #ffffff;
+  padding: 35px 30px;
+  margin-top: 50px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-3d);
+  border: 1px solid var(--border-color);
+  position: relative;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  grid-column: span 2;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-group label span {
+  color: #ef4444;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 0;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  background: #ffffff;
+  color: var(--text-main);
+  transition: var(--transition);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-blue);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.16);
+  background: #ffffff;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 85px;
+}
+
+button[type="submit"] {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(0, 119, 204, 0.35);
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #0088ea 0%, #006bb8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 119, 204, 0.45);
+}
+
+button[type="submit"]:active {
+  transform: translateY(1px);
+}
+
+/* APPOINTMENT QUEUE CARDS / LIST */
+.appointments-feed {
+  margin-top: 40px;
+}
+
+.queue-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.queue-card {
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.queue-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--primary-blue);
+}
+
+.queue-card.status-pending::before {
+  background: var(--warning);
+}
+
+.queue-card.status-confirmed::before {
+  background: var(--success);
+}
+
+.queue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: #93c5fd;
+}
+
+.queue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.queue-token {
+  background: #e0f2fe;
+  color: var(--primary-blue);
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.queue-body h4 {
+  font-size: 17px;
+  color: var(--dark-blue);
+  margin-bottom: 6px;
+}
+
+.queue-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.queue-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding-top: 10px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+@keyframes pulseHighlightBooking {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 10px rgba(14, 165, 233, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0);
+  }
+}
+
+.highlight-recent-booked {
+  animation: pulseHighlightBooking 1.8s ease-in-out 3;
+  border: 2px solid #0ea5e9 !important;
+  background: #f0f9ff !important;
+}
+
+/* CONTACT SECTION */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.contact-info-card {
+  background: linear-gradient(135deg, var(--dark-blue) 0%, var(--deep-blue) 100%);
+  color: #ffffff;
+  padding: 35px 30px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-3d);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contact-info-card h3 {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.contact-info-list {
+  list-style: none;
+  margin: 25px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.contact-icon {
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-hours-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid #38bdf8;
+  font-size: 13px;
+}
+
+/* MODAL OVERLAY & 3D TICKET */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+.modal-overlay.active .modal-card {
+  transform: scale(1) translateY(0);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+  color: #ffffff;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 24px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* 3D Ticket Receipt representation */
+.appointment-pass-card {
+  background: #ffffff;
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius-md);
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 10px 20px rgba(0, 119, 204, 0.1);
+  text-align: center;
+}
+
+.pass-badge {
+  display: inline-block;
+  background: #22c55e;
+  color: #ffffff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.pass-token {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--dark-blue);
+  letter-spacing: 1px;
+}
+
+.pass-token-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.pass-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  text-align: left;
+  background: #f8fafc;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+.pass-details-grid div strong {
+  display: block;
+  color: var(--dark-blue);
+}
+
+.qr-code-box {
+  margin: 15px auto 5px;
+  width: 80px;
+  height: 80px;
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  background: #ffffff;
+  color: var(--text-main);
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 5px solid var(--primary-blue);
+  font-size: 14px;
+  font-weight: 600;
+  transform: translateX(120%);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: auto;
+  max-width: 380px;
+}
+
+.toast.show {
+  transform: translateX(0);
+}
+
+.toast.toast-success {
+  border-left-color: var(--success);
+}
+
+.toast.toast-danger {
+  border-left-color: var(--danger);
+}
+
+/* Footer */
+footer {
+  background: var(--dark-blue);
+  color: #ffffff;
+  padding: 35px 20px 25px;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.footer-brand h4 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.footer-brand p {
+  font-size: 13px;
+  color: #bae6fd;
+  margin-top: 4px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: #e0f2fe;
+  text-decoration: none;
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 13px;
+  color: #bae6fd;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  .stat-box:nth-child(2) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 26px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--dark-blue);
+    padding: 10px 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links a {
+    width: 100%;
+    padding: 12px 24px;
+  }
+
+  .hero {
+    padding: 60px 20px 60px;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero p {
+    font-size: 17px;
+  }
+
+  .stats-bar {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .stat-box {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+  }
+
+  .stat-box:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group.full-width {
+    grid-column: span 1;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.btn-action-primary {
+  background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-action-primary:hover {
+  background: var(--deep-blue);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btn-action-secondary {
+  background: #f1f5f9;
+  color: var(--text-main);
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-action-secondary:hover {
+  background: #e2e8f0;
+}
+
+
+
+</style>
+</head>
+<body>
+
+  <!-- Top Emergency & Status Bar -->
+  <div class="top-bar" id="top-bar">
+    <div class="top-bar-item">
+      <span class="pulse-dot"></span>
+      <span><strong>Live Hospital System</strong>: OPD & Emergency Services Active 24/7</span>
+    </div>
+    <div class="top-bar-item">
+      <span>📞 Emergency: <a href="tel:8910899945" style="color: white; font-weight: 700; text-decoration: none;">8910899945</a></span>
+      <span style="margin: 0 8px; opacity: 0.5;">|</span>
+      <span>Desk: <a href="tel:8092814095" style="color: white; font-weight: 700; text-decoration: none;">8092814095</a></span>
+      <span style="margin: 0 8px; opacity: 0.5;">|</span>
+      <span>📍 <a href="https://maps.app.goo.gl/e2f3cA1T92PnEbwC6" target="_blank" rel="noopener noreferrer" style="color: white; font-weight: 600; text-decoration: underline;" title="Open in Google Maps">PFCV+GCR, Banamalipur, Kolkata, West Bengal 700124</a></span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="main-header">
+    <h1>
+      <span>🏥</span>
+      <span>Hospital Management System</span>
+    </h1>
+    <p>Healthcare & Patient Management Portal</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav id="main-nav">
+    <div class="nav-container">
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">☰</button>
+      <div class="nav-links" id="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#services">Services</a>
+        <a href="#doctors">Doctors</a>
+        <a href="#patients">Patients</a>
+        <a href="#appointments">Appointments</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-badge-btn" id="btn-quick-book" onclick="document.getElementById('appointments').scrollIntoView({behavior: 'smooth'})">
+          + Book Appointment
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <span class="hero-badge">⭐ Certified Multidisciplinary Care</span>
+      <h1>Welcome to City Hospital</h1>
+      <p>Providing Quality Healthcare Services with compassion, modern technology, and renowned medical experts.</p>
+      <div class="hero-actions">
+        <a href="#appointments" class="btn-hero-primary" id="hero-book-btn">
+          <span>📅</span> Book Appointment
+        </a>
+        <a href="#doctors" class="btn-hero-secondary" id="hero-doctors-btn">
+          <span>👨‍⚕️</span> View Specialists
+        </a>
+        <a href="#patients" class="btn-hero-secondary" id="hero-patients-btn">
+          <span>📋</span> Patient Records
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3D Floating Stats Bar -->
+  <div class="stats-bar-wrapper">
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat-box" id="stat-doctors">
+        <div class="stat-icon">👨‍⚕️</div>
+        <div class="stat-info">
+          <h3 id="stat-doctor-count">6</h3>
+          <p>Specialist Doctors</p>
+        </div>
+      </div>
+      <div class="stat-box" id="stat-patients">
+        <div class="stat-icon">🩺</div>
+        <div class="stat-info">
+          <h3 id="stat-patient-count">4</h3>
+          <p>Active Patient Records</p>
+        </div>
+      </div>
+      <div class="stat-box" id="stat-appointments">
+        <div class="stat-icon">📅</div>
+        <div class="stat-info">
+          <h3 id="stat-apt-count">3</h3>
+          <p>Booked Appointments</p>
+        </div>
+      </div>
+      <div class="stat-box" id="stat-beds">
+        <div class="stat-icon">🛏️</div>
+        <div class="stat-info">
+          <h3 id="stat-bed-count">42</h3>
+          <p>Available Beds (24/7)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- HOSPITAL SERVICES with 3D TILT EFFECT -->
+    <section id="services" style="padding-top: 20px;">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Hospital Services</h2>
+        <p class="section-subtitle">Comprehensive digital workflow for staff, physicians, and patients</p>
+      </div>
+
+      <div class="cards-perspective-container">
+        <div class="cards">
+          <!-- Card 1: Patient Records -->
+          <div class="card-3d-wrap" data-tilt>
+            <div class="card" id="card-service-patients">
+              <div class="card-glare"></div>
+              <div class="card-icon-wrap">📋</div>
+              <h3>Patient Records</h3>
+              <p>Manage patient admission files, medical histories, diagnosis records, and prescription notes securely.</p>
+              <button class="card-btn" onclick="document.getElementById('patients').scrollIntoView({behavior: 'smooth'})">
+                Access Records &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: Doctor Management -->
+          <div class="card-3d-wrap" data-tilt>
+            <div class="card" id="card-service-doctors">
+              <div class="card-glare"></div>
+              <div class="card-icon-wrap">👨‍⚕️</div>
+              <h3>Doctor Management</h3>
+              <p>Track doctor availability schedules, specialty departments, OPD consultation timings, and room numbers.</p>
+              <button class="card-btn" onclick="document.getElementById('doctors').scrollIntoView({behavior: 'smooth'})">
+                View Roster &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3: Appointment Booking -->
+          <div class="card-3d-wrap" data-tilt>
+            <div class="card" id="card-service-appointments">
+              <div class="card-glare"></div>
+              <div class="card-icon-wrap">🕒</div>
+              <h3>Appointment Booking</h3>
+              <p>Book instant doctor consultations online, generate digital tokens, and manage scheduled visit queues.</p>
+              <button class="card-btn" onclick="document.getElementById('appointments').scrollIntoView({behavior: 'smooth'})">
+                Book Visit &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOCTOR LIST SECTION -->
+    <section id="doctors" style="margin-top: 60px;">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Doctor List</h2>
+        <p class="section-subtitle">Browse and filter verified medical specialists across departments</p>
+      </div>
+
+      <!-- Toolbar: Filter Pills and Live Search -->
+      <div class="toolbar-wrap">
+        <div class="filter-pills" id="doctor-dept-filters">
+          <button class="filter-pill active" data-dept="All">All Departments</button>
+          <button class="filter-pill" data-dept="Cardiology">Cardiology</button>
+          <button class="filter-pill" data-dept="Neurology">Neurology</button>
+          <button class="filter-pill" data-dept="Orthopedics">Orthopedics</button>
+          <button class="filter-pill" data-dept="Pediatrics">Pediatrics</button>
+          <button class="filter-pill" data-dept="General Medicine">General Medicine</button>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="doctor-search-input" placeholder="Search doctor or dept..." />
+          </div>
+          <button class="action-btn-sm" id="btn-add-doctor-modal">
+            <span>+</span> Add Doctor
+          </button>
+        </div>
+      </div>
+
+      <!-- Doctor Table with 3D Hover Rows -->
+      <div class="table-responsive">
+        <table id="doctors-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Doctor Name</th>
+              <th>Department</th>
+              <th>OPD Room</th>
+              <th>Contact</th>
+              <th>Schedule</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="doctors-tbody">
+            <!-- Dynamically populated from backend -->
+            <tr>
+              <td colspan="7" style="text-align:center; padding: 25px; color: var(--text-muted);">
+                Loading doctors from server...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PATIENT RECORDS SECTION -->
+    <section id="patients" style="margin-top: 60px;">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Patient Records</h2>
+        <p class="section-subtitle">Real-time clinical admissions, diagnosis notes, and patient tracking</p>
+      </div>
+
+      <div class="toolbar-wrap">
+        <div class="filter-pills" id="patient-status-filters">
+          <button class="filter-pill active" data-status="All">All Patients</button>
+          <button class="filter-pill" data-status="Outpatient">Outpatient</button>
+          <button class="filter-pill" data-status="Admitted">Admitted</button>
+          <button class="filter-pill" data-status="Discharged">Discharged</button>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="patient-search-input" placeholder="Search patient name or ID..." />
+          </div>
+          <button class="action-btn-sm" id="btn-add-patient-modal">
+            <span>+</span> Register Patient
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table id="patients-table">
+          <thead>
+            <tr>
+              <th>Patient ID</th>
+              <th>Full Name</th>
+              <th>Age / Gender</th>
+              <th>Department</th>
+              <th>Attending Doctor</th>
+              <th>Status</th>
+              <th>Last Visit</th>
+            </tr>
+          </thead>
+          <tbody id="patients-tbody">
+            <!-- Dynamically populated from backend -->
+            <tr>
+              <td colspan="7" style="text-align:center; padding: 25px; color: var(--text-muted);">
+                Loading patient records...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BOOK APPOINTMENT SECTION -->
+    <section id="appointments" class="form-section">
+      <div class="section-title-wrap" style="margin-bottom: 25px;">
+        <h2 class="section-title">Book Appointment</h2>
+        <p class="section-subtitle">Fill in the patient details to reserve an OPD slot and generate your appointment pass</p>
+      </div>
+
+      <form id="appointment-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="apt-patient-name">Patient Name <span>*</span></label>
+            <input type="text" id="apt-patient-name" placeholder="e.g. John Doe" required />
+          </div>
+
+          <div class="form-group">
+            <label for="apt-email">Email Address <span>*</span></label>
+            <input type="email" id="apt-email" placeholder="e.g. john.doe@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="apt-phone">Phone Number <span>*</span></label>
+            <input type="tel" id="apt-phone" placeholder="e.g. 9876543210" minlength="7" maxlength="15" required />
+          </div>
+
+          <div class="form-group">
+            <label for="apt-department">Select Department <span>*</span></label>
+            <select id="apt-department" required>
+              <option value="">-- Choose Department --</option>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Neurology">Neurology</option>
+              <option value="Orthopedics">Orthopedics</option>
+              <option value="Pediatrics">Pediatrics</option>
+              <option value="General Medicine">General Medicine</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="apt-doctor">Select Preferred Doctor</label>
+            <select id="apt-doctor">
+              <option value="">-- Any Available Specialist --</option>
+              <!-- Dynamically populated based on chosen department -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="apt-date">Appointment Date <span>*</span></label>
+            <input type="date" id="apt-date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="apt-timeslot">Preferred Time Slot</label>
+            <select id="apt-timeslot">
+              <option value="09:00 AM - 10:00 AM">09:00 AM - 10:00 AM</option>
+              <option value="10:00 AM - 11:00 AM" selected>10:00 AM - 11:00 AM</option>
+              <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
+              <option value="02:00 PM - 03:00 PM">02:00 PM - 03:00 PM</option>
+              <option value="03:00 PM - 04:00 PM">03:00 PM - 04:00 PM</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="apt-notes">Symptoms / Notes (Optional)</label>
+            <textarea id="apt-notes" placeholder="Briefly describe symptoms or reason for visit..."></textarea>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 25px;">
+          <button type="submit" id="btn-submit-appointment">
+            <span>📅</span> Confirm & Book Appointment
+          </button>
+        </div>
+      </form>
+
+      <!-- Current Scheduled Appointments Queue Feed -->
+      <div class="appointments-feed">
+        <div class="section-header-actions" style="margin-top: 40px;">
+          <h3 style="color: var(--dark-blue); font-size: 20px;">
+            📋 Recent Bookings & OPD Schedule
+          </h3>
+          <span style="font-size: 13px; color: var(--text-muted);">
+            Live sync with hospital dispatch
+          </span>
+        </div>
+
+        <div class="queue-grid" id="appointment-queue-container">
+          <!-- Dynamically populated from backend -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" style="margin-top: 60px;">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Contact & Helpdesk</h2>
+        <p class="section-subtitle">Reach out to our patient helpdesk or request assistance</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info-card">
+          <div>
+            <h3>City Hospital Campus</h3>
+            <p style="color: #bae6fd; font-size: 14px;">
+              24-Hour Medical Care, Trauma Center & Specialized Diagnostic Labs
+            </p>
+
+            <ul class="contact-info-list">
+              <li class="contact-item">
+                <span class="contact-icon">📍</span>
+                <div>
+                  <strong>Address & Map Location</strong>
+                  <p style="color: #e0f2fe; font-size: 13px;">PFCV+GCR, Banamalipur, Kolkata, West Bengal 700124</p>
+                  <a href="https://maps.app.goo.gl/e2f3cA1T92PnEbwC6" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; font-size: 12px; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px; margin-top: 3px; font-weight: 600;">
+                    📍 Open in Google Maps (maps.app.goo.gl/e2f3cA1T92PnEbwC6) ↗
+                  </a>
+                </div>
+              </li>
+              <li class="contact-item">
+                <span class="contact-icon">📞</span>
+                <div>
+                  <strong>Phone Lines</strong>
+                  <p style="color: #e0f2fe; font-size: 13px;">
+                    Emergency: <a href="tel:8910899945" style="color: #ffffff; font-weight: 700; text-decoration: underline;">8910899945</a><br />
+                    Desk: <a href="tel:8092814095" style="color: #ffffff; font-weight: 700; text-decoration: underline;">8092814095</a>
+                  </p>
+                </div>
+              </li>
+              <li class="contact-item">
+                <span class="contact-icon">✉️</span>
+                <div>
+                  <strong>Helpdesk Email</strong>
+                  <p style="color: #e0f2fe; font-size: 13px;">
+                    <a href="mailto:helpdesk.cityhospital67@gmail.com" style="color: #ffffff; font-weight: 700; text-decoration: underline;">helpdesk.cityhospital67@gmail.com</a>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="contact-hours-box">
+            <strong>Operating Hours:</strong><br />
+            Emergency & Inpatient Care: 24/7/365<br />
+            OPD Doctor Consultations: Mon - Sat, 08:30 AM to 06:00 PM
+          </div>
+        </div>
+
+        <!-- Contact / Query Form -->
+        <div style="background: white; padding: 30px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-md);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <h3 style="color: var(--dark-blue); font-size: 20px;">Send Us a Message</h3>
+            <span style="background: #e0f2fe; color: var(--deep-blue); font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 12px;">Direct Email Dispatch</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+            Your inquiry will be sent directly to <strong>helpdesk.cityhospital67@gmail.com</strong>
+          </p>
+          <form id="contact-form">
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label for="contact-name">Full Name <span>*</span></label>
+              <input type="text" id="contact-name" placeholder="Your name" required />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label for="contact-email">Email Address <span>*</span></label>
+              <input type="email" id="contact-email" placeholder="your.email@example.com" required />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label for="contact-phone">Phone Number (Optional)</label>
+              <input type="tel" id="contact-phone" placeholder="e.g. 9876543210" />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label for="contact-dept">Department of Inquiry</label>
+              <select id="contact-dept">
+                <option value="General Inquiry">General Inquiry</option>
+                <option value="Emergency & Trauma">Emergency & Trauma Care</option>
+                <option value="Billing & Insurance">Billing & Insurance</option>
+                <option value="Diagnostic Lab & Diagnostics">Diagnostic Lab & Blood Bank</option>
+                <option value="Doctor Availability & Appointments">Doctor Availability & Appointments</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 18px;">
+              <label for="contact-msg">Message <span>*</span></label>
+              <textarea id="contact-msg" placeholder="How can our healthcare team assist you today?" required></textarea>
+            </div>
+
+            <button type="submit" id="btn-submit-contact" style="width: 100%;">
+              <span>✉️</span> Send Message to Helpdesk
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Google Maps Interactive Location Card -->
+      <div style="margin-top: 30px; background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); overflow: hidden; box-shadow: var(--shadow-md);">
+        <div style="padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--border-color); background: #f8fafc;">
+          <div>
+            <h4 style="color: var(--dark-blue); font-size: 17px; margin-bottom: 3px; display: flex; align-items: center; gap: 8px;">
+              <span>📍</span> Hospital Google Maps Location
+            </h4>
+            <p style="font-size: 13px; color: var(--text-muted); margin: 0;">
+              PFCV+GCR, Banamalipur, Kolkata, West Bengal 700124 (Barasat Govt Medical College & Hospital)
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="https://maps.app.goo.gl/e2f3cA1T92PnEbwC6" target="_blank" rel="noopener noreferrer" class="btn-action-primary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-size: 13px; padding: 8px 15px;">
+              <span>🗺️</span> Open Google Maps Link (e2f3cA1T92PnEbwC6) ↗
+            </a>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=22.7213517,88.4935013" target="_blank" rel="noopener noreferrer" class="btn-action-secondary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-size: 13px; padding: 8px 15px;">
+              <span>🧭</span> Get Directions
+            </a>
+          </div>
+        </div>
+        <div style="width: 100%; height: 350px; position: relative; background: #e2e8f0;">
+          <iframe
+            id="hospital-google-map"
+            title="Hospital Google Map Location"
+            src="https://maps.google.com/maps?q=22.7213517,88.4935013&hl=en&z=16&output=embed"
+            width="100%"
+            height="100%"
+            style="border: 0; display: block;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- MODAL 1: 3D Appointment Confirmation Ticket Pass -->
+  <div class="modal-overlay" id="appointment-ticket-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Appointment Confirmed</h3>
+        <button class="modal-close" onclick="closeModal('appointment-ticket-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="appointment-pass-card">
+          <span class="pass-badge">✓ Booking Confirmed</span>
+          <div class="pass-token" id="pass-token">TK-04</div>
+          <div class="pass-token-label">Queue Token Number</div>
+
+          <div class="pass-details-grid">
+            <div>
+              <strong>Patient Name:</strong>
+              <span id="pass-patient">John Doe</span>
+            </div>
+            <div>
+              <strong>Appointment ID:</strong>
+              <span id="pass-id">APT-1004</span>
+            </div>
+            <div>
+              <strong>Department:</strong>
+              <span id="pass-dept">Cardiology</span>
+            </div>
+            <div>
+              <strong>Doctor:</strong>
+              <span id="pass-doctor">Dr. Sharma</span>
+            </div>
+            <div>
+              <strong>Room Number:</strong>
+              <span id="pass-room">OPD 12</span>
+            </div>
+            <div>
+              <strong>Date & Slot:</strong>
+              <span id="pass-date">2026-09-08 (10:00 AM)</span>
+            </div>
+          </div>
+
+          <div class="qr-code-box">
+            <span>[QR CODE]</span>
+          </div>
+          <p style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
+            Please present this token at the reception counter 15 mins prior to your slot.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; flex-wrap: wrap;">
+          <button class="action-btn-sm" onclick="window.print()" style="background: var(--text-main);">
+            🖨️ Print Pass
+          </button>
+          <button class="action-btn-sm" onclick="viewInRecentBookings()" style="background: var(--primary-blue);">
+            📋 View in Recent Bookings
+          </button>
+          <button class="action-btn-sm" onclick="closeModal('appointment-ticket-modal')">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Add New Doctor Modal -->
+  <div class="modal-overlay" id="add-doctor-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Register New Doctor</h3>
+        <button class="modal-close" onclick="closeModal('add-doctor-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="new-doctor-form">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="doc-name">Doctor Name <span>*</span></label>
+            <input type="text" id="doc-name" placeholder="e.g. Dr. Kavita Nair" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="doc-dept">Department <span>*</span></label>
+            <select id="doc-dept" required>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Neurology">Neurology</option>
+              <option value="Orthopedics">Orthopedics</option>
+              <option value="Pediatrics">Pediatrics</option>
+              <option value="General Medicine">General Medicine</option>
+              <option value="Dermatology">Dermatology</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="doc-contact">Contact Number <span>*</span></label>
+            <input type="tel" id="doc-contact" placeholder="e.g. 9876543219" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="doc-qualification">Qualification / Degrees</label>
+            <input type="text" id="doc-qualification" placeholder="e.g. MBBS, MD, Specialist" />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="doc-room">OPD Room Number</label>
+            <input type="text" id="doc-room" placeholder="e.g. OPD 16" />
+          </div>
+
+          <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+            <button type="button" class="card-btn" onclick="closeModal('add-doctor-modal')">Cancel</button>
+            <button type="submit" class="action-btn-sm">+ Save Doctor</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Add New Patient Modal -->
+  <div class="modal-overlay" id="add-patient-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Register New Patient</h3>
+        <button class="modal-close" onclick="closeModal('add-patient-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="new-patient-form">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="pat-name">Patient Full Name <span>*</span></label>
+            <input type="text" id="pat-name" placeholder="e.g. Suman Roy" required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+            <div class="form-group">
+              <label for="pat-age">Age <span>*</span></label>
+              <input type="number" id="pat-age" min="1" max="120" placeholder="e.g. 35" required />
+            </div>
+            <div class="form-group">
+              <label for="pat-gender">Gender</label>
+              <select id="pat-gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="pat-contact">Contact Phone <span>*</span></label>
+            <input type="tel" id="pat-contact" placeholder="e.g. 9812345678" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="pat-dept">Department <span>*</span></label>
+            <select id="pat-dept" required>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Neurology">Neurology</option>
+              <option value="Orthopedics">Orthopedics</option>
+              <option value="Pediatrics">Pediatrics</option>
+              <option value="General Medicine">General Medicine</option>
+            </select>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+            <div class="form-group">
+              <label for="pat-blood">Blood Group</label>
+              <select id="pat-blood">
+                <option value="O+">O+</option>
+                <option value="A+">A+</option>
+                <option value="B+">B+</option>
+                <option value="AB+">AB+</option>
+                <option value="O-">O-</option>
+                <option value="A-">A-</option>
+                <option value="B-">B-</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="pat-status">Admission Status</label>
+              <select id="pat-status">
+                <option value="Outpatient">Outpatient</option>
+                <option value="Admitted">Admitted</option>
+                <option value="Discharged">Discharged</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="pat-diagnosis">Preliminary Diagnosis / Notes</label>
+            <input type="text" id="pat-diagnosis" placeholder="e.g. Routine consultation, follow-up" />
+          </div>
+
+          <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+            <button type="button" class="card-btn" onclick="closeModal('add-patient-modal')">Cancel</button>
+            <button type="submit" class="action-btn-sm">+ Save Patient Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Message Sent to Helpdesk Confirmation -->
+  <div class="modal-overlay" id="contact-success-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>✉️ Message Dispatched to Helpdesk</h3>
+        <button class="modal-close" onclick="closeModal('contact-success-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="text-align: center; margin-bottom: 18px;">
+          <div style="font-size: 36px; margin-bottom: 6px;">📬</div>
+          <h4 style="color: var(--dark-blue); font-size: 18px; margin-bottom: 6px;">Inquiry Dispatched</h4>
+          <p style="color: var(--text-muted); font-size: 13px;">Your message has been addressed directly to our official hospital helpdesk:</p>
+          <div style="display: inline-block; background: #e0f2fe; color: var(--deep-blue); font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 14px; margin-top: 6px; border: 1px solid #bae6fd;">
+            helpdesk.cityhospital67@gmail.com
+          </div>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 18px;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px;">Subject:</div>
+          <div id="contact-modal-subject" style="font-size: 13px; font-weight: 600; color: var(--dark-blue); margin-bottom: 10px;"></div>
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px;">Message Text:</div>
+          <div id="contact-modal-body" style="font-size: 12px; color: var(--text-main); white-space: pre-wrap; line-height: 1.4; max-height: 140px; overflow-y: auto; background: #ffffff; padding: 10px; border-radius: 4px; border: 1px solid #e2e8f0;"></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a id="btn-open-gmail-web" href="#" target="_blank" rel="noopener noreferrer" class="btn-action-primary" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; text-align: center;">
+            <span>🚀</span> Send Directly via Gmail (Web)
+          </a>
+          <a id="btn-open-default-mail" href="#" class="btn-action-secondary" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; text-align: center;">
+            <span>✉️</span> Open Default Mail Client
+          </a>
+          <button class="btn-action-secondary" type="button" onclick="copyContactMessageText()">
+            <span>📋</span> Copy Formatted Message to Clipboard
+          </button>
+          <button class="action-btn-sm" type="button" onclick="closeModal('contact-success-modal')" style="margin-top: 4px; width: 100%;">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h4>City Hospital Management System</h4>
+        <p>Providing Excellence in Modern Medical Care, OPD Consultations & Diagnostics</p>
+      </div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#doctors">Doctors</a>
+        <a href="#patients">Patients</a>
+        <a href="#appointments">Appointments</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Hospital Management System | All Rights Reserved</p>
+    </div>
+  </footer>
+
+  <!-- Application Logic in Pure JavaScript -->
+  <script>
+// Hospital Management System - Vanilla JavaScript (Frontend)
+
+// Default seed data for offline / standalone / file:// mode
+const SEED_DOCTORS = [
+  {
+    id: "D101",
+    name: "Dr. Sharma",
+    department: "Cardiology",
+    contact: "9876543210",
+    email: "sharma@cityhospital.com",
+    qualification: "MD, DM (Cardiology)",
+    experience: "14 yrs",
+    room: "OPD 12",
+    availableDays: ["Monday", "Wednesday", "Friday"],
+    availableTime: "09:00 AM - 01:00 PM",
+    rating: 4.9,
+    patientsCount: 1420
+  },
+  {
+    id: "D102",
+    name: "Dr. Roy",
+    department: "Neurology",
+    contact: "9876543211",
+    email: "roy@cityhospital.com",
+    qualification: "MBBS, MCh (Neurology)",
+    experience: "11 yrs",
+    room: "OPD 05",
+    availableDays: ["Tuesday", "Thursday", "Saturday"],
+    availableTime: "10:00 AM - 02:00 PM",
+    rating: 4.8,
+    patientsCount: 980
+  },
+  {
+    id: "D103",
+    name: "Dr. Das",
+    department: "Orthopedics",
+    contact: "9876543212",
+    email: "das@cityhospital.com",
+    qualification: "MS (Ortho), Joint Specialist",
+    experience: "9 yrs",
+    room: "OPD 08",
+    availableDays: ["Monday", "Tuesday", "Friday"],
+    availableTime: "11:00 AM - 03:00 PM",
+    rating: 4.7,
+    patientsCount: 860
+  },
+  {
+    id: "D104",
+    name: "Dr. Ananya Sen",
+    department: "Pediatrics",
+    contact: "9876543213",
+    email: "ananya.sen@cityhospital.com",
+    qualification: "MD (Pediatrics), DCH",
+    experience: "8 yrs",
+    room: "OPD 03",
+    availableDays: ["Monday", "Wednesday", "Saturday"],
+    availableTime: "09:30 AM - 01:30 PM",
+    rating: 4.9,
+    patientsCount: 1150
+  },
+  {
+    id: "D105",
+    name: "Dr. Rajesh Verma",
+    department: "Cardiology",
+    contact: "9876543214",
+    email: "verma@cityhospital.com",
+    qualification: "MD, FACC Interventional",
+    experience: "16 yrs",
+    room: "OPD 14",
+    availableDays: ["Tuesday", "Thursday"],
+    availableTime: "02:00 PM - 06:00 PM",
+    rating: 4.9,
+    patientsCount: 2100
+  },
+  {
+    id: "D106",
+    name: "Dr. Priya Nair",
+    department: "General Medicine",
+    contact: "9876543215",
+    email: "priya.nair@cityhospital.com",
+    qualification: "MBBS, MD (Medicine)",
+    experience: "10 yrs",
+    room: "OPD 01",
+    availableDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    availableTime: "08:30 AM - 02:00 PM",
+    rating: 4.8,
+    patientsCount: 1890
+  }
+];
+
+const SEED_PATIENTS = [
+  {
+    id: "P201",
+    name: "Rahul Mukherjee",
+    age: 42,
+    gender: "Male",
+    contact: "9812345670",
+    email: "rahul.m@example.com",
+    department: "Cardiology",
+    doctor: "Dr. Sharma",
+    bloodGroup: "O+",
+    admissionStatus: "Outpatient",
+    diagnosis: "Hypertension / Mild Arrhythmia",
+    lastVisit: "2026-09-02"
+  },
+  {
+    id: "P202",
+    name: "Sunita Devi",
+    age: 58,
+    gender: "Female",
+    contact: "9823456781",
+    email: "sunita.d@example.com",
+    department: "Neurology",
+    doctor: "Dr. Roy",
+    bloodGroup: "B+",
+    admissionStatus: "Admitted",
+    diagnosis: "Migraine & Cervical Spondylosis",
+    lastVisit: "2026-09-05"
+  },
+  {
+    id: "P203",
+    name: "Aarav Banerjee",
+    age: 11,
+    gender: "Male",
+    contact: "9834567892",
+    email: "banerjee.parent@example.com",
+    department: "Pediatrics",
+    doctor: "Dr. Ananya Sen",
+    bloodGroup: "A+",
+    admissionStatus: "Discharged",
+    diagnosis: "Acute Bronchitis Recovery",
+    lastVisit: "2026-08-28"
+  },
+  {
+    id: "P204",
+    name: "Meera Joshi",
+    age: 34,
+    gender: "Female",
+    contact: "9845678903",
+    email: "meera.j@example.com",
+    department: "Orthopedics",
+    doctor: "Dr. Das",
+    bloodGroup: "AB+",
+    admissionStatus: "Outpatient",
+    diagnosis: "Ligament Tear Rehab",
+    lastVisit: "2026-09-04"
+  }
+];
+
+const SEED_APPOINTMENTS = [
+  {
+    id: "APT-1001",
+    token: "TK-01",
+    patientName: "Amitabh Sen",
+    email: "amitabh@example.com",
+    phone: "9871112233",
+    department: "Cardiology",
+    doctorId: "D101",
+    doctorName: "Dr. Sharma",
+    date: "2026-09-08",
+    timeSlot: "10:30 AM",
+    status: "Confirmed",
+    notes: "Routine ECG follow-up",
+    room: "OPD 12",
+    createdAt: "2026-09-06T10:00:00Z"
+  },
+  {
+    id: "APT-1002",
+    token: "TK-02",
+    patientName: "Kavita Rao",
+    email: "kavita@example.com",
+    phone: "9872223344",
+    department: "Neurology",
+    doctorId: "D102",
+    doctorName: "Dr. Roy",
+    date: "2026-09-09",
+    timeSlot: "11:15 AM",
+    status: "Pending",
+    notes: "Persistent headaches",
+    room: "OPD 05",
+    createdAt: "2026-09-06T12:00:00Z"
+  },
+  {
+    id: "APT-1003",
+    token: "TK-03",
+    patientName: "Deepak Chawla",
+    email: "deepak@example.com",
+    phone: "9873334455",
+    department: "Orthopedics",
+    doctorId: "D103",
+    doctorName: "Dr. Das",
+    date: "2026-09-07",
+    timeSlot: "02:00 PM",
+    status: "Confirmed",
+    notes: "Knee arthroscopy checkup",
+    room: "OPD 08",
+    createdAt: "2026-09-06T15:00:00Z"
+  }
+];
+
+// Local Storage Helpers
+function getLocalItem(key, defaultData) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) {
+      localStorage.setItem(key, JSON.stringify(defaultData));
+      return defaultData;
+    }
+    return JSON.parse(raw);
+  } catch (e) {
+    return defaultData;
+  }
+}
+
+function setLocalItem(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (e) {
+    console.warn("Storage write error:", e);
+  }
+}
+
+// Global state
+let currentDoctors = [];
+let currentPatients = [];
+let currentAppointments = [];
+let isOfflineMode = (window.location.protocol === "file:");
+let lastBookedAptId = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+  init3DTiltEffects();
+  initNavigation();
+  initDateConstraints();
+  initEventListeners();
+
+  // Initial data load
+  loadStats();
+  loadDoctors();
+  loadPatients();
+  loadAppointments();
+});
+
+/* ==========================================================================
+   1. 3D Card Hover & Tilt Effects
+   ========================================================================== */
+function init3DTiltEffects() {
+  const tiltCards = document.querySelectorAll("[data-tilt]");
+
+  tiltCards.forEach(cardWrap => {
+    const glare = cardWrap.querySelector(".card-glare");
+
+    cardWrap.addEventListener("mousemove", (e) => {
+      const rect = cardWrap.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Calculate rotation angles (-10 to +10 degrees)
+      const rotateX = -((y - centerY) / centerY) * 10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+
+      cardWrap.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(10px)`;
+
+      // Dynamic specular reflection following cursor
+      if (glare) {
+        const percentX = (x / rect.width) * 100;
+        const percentY = (y / rect.height) * 100;
+        glare.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 80%)`;
+      }
+    });
+
+    cardWrap.addEventListener("mouseleave", () => {
+      cardWrap.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)";
+      if (glare) {
+        glare.style.background = "transparent";
+      }
+    });
+  });
+}
+
+/* ==========================================================================
+   2. Responsive Navigation & Smooth Scrolling
+   ========================================================================== */
+function initNavigation() {
+  const menuToggle = document.getElementById("menu-toggle");
+  const navLinks = document.getElementById("nav-links");
+
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+
+    // Close menu when a link is clicked on mobile
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+      });
+    });
+  }
+
+  // Active Link Spy on Scroll
+  const sections = document.querySelectorAll("section[id]");
+  window.addEventListener("scroll", () => {
+    let current = "";
+    const scrollPos = window.pageYOffset + 120;
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+        current = section.getAttribute("id");
+      }
+    });
+
+    const links = document.querySelectorAll(".nav-links a");
+    links.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === `#${current}`) {
+        link.classList.add("active");
+      }
+    });
+  });
+}
+
+/* Set min date for appointment booking to today */
+function initDateConstraints() {
+  const dateInput = document.getElementById("apt-date");
+  if (dateInput) {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
+
+    dateInput.min = `${yyyy}-${mm}-${dd}`;
+    if (!dateInput.value) {
+      dateInput.value = `${yyyy}-${mm}-${dd}`;
+    }
+  }
+}
+
+/* ==========================================================================
+   3. Backend API Data Fetchers & Renderers (With Offline Fallback)
+   ========================================================================== */
+
+// Stats
+async function loadStats() {
+  let stats = null;
+  if (!isOfflineMode) {
+    try {
+      const res = await fetch("/api/stats");
+      if (res.ok) {
+        stats = await res.json();
+      }
+    } catch (err) {
+      isOfflineMode = true;
+    }
+  }
+
+  if (!stats) {
+    const docs = getLocalItem("hms_doctors", SEED_DOCTORS);
+    const pats = getLocalItem("hms_patients", SEED_PATIENTS);
+    const apts = getLocalItem("hms_appointments", SEED_APPOINTMENTS);
+    stats = {
+      totalDoctors: docs.length,
+      totalPatients: pats.length,
+      totalAppointments: apts.length,
+      availableBeds: 42
+    };
+  }
+
+  document.getElementById("stat-doctor-count").textContent = stats.totalDoctors || 0;
+  document.getElementById("stat-patient-count").textContent = stats.totalPatients || 0;
+  document.getElementById("stat-apt-count").textContent = stats.totalAppointments || 0;
+  document.getElementById("stat-bed-count").textContent = stats.availableBeds || 42;
+}
+
+// Doctors
+async function loadDoctors(department = "All", search = "") {
+  let docs = null;
+  if (!isOfflineMode) {
+    try {
+      let url = "/api/doctors";
+      const params = new URLSearchParams();
+      if (department && department !== "All") params.append("department", department);
+      if (search) params.append("search", search);
+      if (params.toString()) url += `?${params.toString()}`;
+
+      const res = await fetch(url);
+      if (res.ok) {
+        docs = await res.json();
+        setLocalItem("hms_doctors", docs);
+      }
+    } catch (err) {
+      isOfflineMode = true;
+    }
+  }
+
+  if (!docs) {
+    const allDocs = getLocalItem("hms_doctors", SEED_DOCTORS);
+    docs = allDocs.filter(d => {
+      const matchDept = (!department || department === "All" || d.department.toLowerCase() === department.toLowerCase());
+      const matchSearch = (!search || 
+        d.name.toLowerCase().includes(search.toLowerCase()) || 
+        d.department.toLowerCase().includes(search.toLowerCase()) || 
+        d.contact.includes(search) || 
+        d.id.toLowerCase().includes(search.toLowerCase())
+      );
+      return matchDept && matchSearch;
+    });
+  }
+
+  currentDoctors = docs;
+  renderDoctorsTable(currentDoctors);
+  populateDoctorDropdown(currentDoctors);
+}
+
+function renderDoctorsTable(doctors) {
+  const tbody = document.getElementById("doctors-tbody");
+  if (!tbody) return;
+
+  if (!doctors || doctors.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align:center; padding: 30px; color: var(--text-muted);">
+          No matching doctors found. Try adjusting your search or filter.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = doctors.map(doc => `
+    <tr id="doc-row-${doc.id}">
+      <td><strong>${doc.id}</strong></td>
+      <td>
+        <strong style="color: var(--dark-blue); font-size: 15px;">${doc.name}</strong>
+        <div style="font-size: 12px; color: var(--text-muted);">${doc.qualification || "Specialist"}</div>
+      </td>
+      <td>
+        <span class="badge badge-dept">${doc.department}</span>
+      </td>
+      <td><strong>${doc.room || "OPD 01"}</strong></td>
+      <td>
+        <a href="tel:${doc.contact}" style="color: var(--text-main); text-decoration: none; font-weight: 500;">
+          📞 ${doc.contact}
+        </a>
+      </td>
+      <td>
+        <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">
+          ${(doc.availableDays || ["Mon", "Wed", "Fri"]).join(", ")}
+        </span>
+      </td>
+      <td>
+        <button class="table-btn table-btn-primary" onclick="quickBookDoctor('${doc.id}', '${doc.department}')">
+          Book Visit
+        </button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+// Populate appointment booking doctor dropdown
+function populateDoctorDropdown(doctorsList) {
+  const select = document.getElementById("apt-doctor");
+  if (!select) return;
+
+  const currentVal = select.value;
+  select.innerHTML = `<option value="">-- Any Available Specialist --</option>` +
+    doctorsList.map(d => `<option value="${d.id}">${d.name} (${d.department} - ${d.room || "OPD"})</option>`).join("");
+
+  if (currentVal && doctorsList.some(d => d.id === currentVal)) {
+    select.value = currentVal;
+  }
+}
+
+// Quick book action from doctor table
+window.quickBookDoctor = function(doctorId, department) {
+  const deptSelect = document.getElementById("apt-department");
+  const docSelect = document.getElementById("apt-doctor");
+  const appointmentSection = document.getElementById("appointments");
+
+  if (deptSelect) deptSelect.value = department;
+  filterDoctorSelectByDept(department);
+
+  if (docSelect) docSelect.value = doctorId;
+
+  if (appointmentSection) {
+    appointmentSection.scrollIntoView({ behavior: "smooth" });
+    appointmentSection.style.boxShadow = "0 0 0 3px rgba(0, 119, 204, 0.5)";
+    setTimeout(() => {
+      appointmentSection.style.boxShadow = "";
+    }, 1200);
+  }
+
+  showToast(`Selected Dr. ${doctorId} (${department}) for appointment booking.`, "success");
+};
+
+function filterDoctorSelectByDept(department) {
+  const select = document.getElementById("apt-doctor");
+  if (!select) return;
+
+  let filtered = currentDoctors;
+  if (department) {
+    filtered = currentDoctors.filter(d => d.department.toLowerCase() === department.toLowerCase());
+  }
+
+  select.innerHTML = `<option value="">-- Any Available Specialist --</option>` +
+    filtered.map(d => `<option value="${d.id}">${d.name} (${d.room || "OPD"})</option>`).join("");
+}
+
+// Patients
+async function loadPatients(status = "All", search = "") {
+  let pats = null;
+  if (!isOfflineMode) {
+    try {
+      let url = "/api/patients";
+      const params = new URLSearchParams();
+      if (status && status !== "All") params.append("status", status);
+      if (search) params.append("search", search);
+      if (params.toString()) url += `?${params.toString()}`;
+
+      const res = await fetch(url);
+      if (res.ok) {
+        pats = await res.json();
+        setLocalItem("hms_patients", pats);
+      }
+    } catch (err) {
+      isOfflineMode = true;
+    }
+  }
+
+  if (!pats) {
+    const allPats = getLocalItem("hms_patients", SEED_PATIENTS);
+    pats = allPats.filter(p => {
+      const matchStatus = (!status || status === "All" || p.admissionStatus.toLowerCase() === status.toLowerCase());
+      const matchSearch = (!search || 
+        p.name.toLowerCase().includes(search.toLowerCase()) || 
+        p.id.toLowerCase().includes(search.toLowerCase()) || 
+        p.department.toLowerCase().includes(search.toLowerCase()) || 
+        p.contact.includes(search)
+      );
+      return matchStatus && matchSearch;
+    });
+  }
+
+  currentPatients = pats;
+  renderPatientsTable(currentPatients);
+}
+
+function renderPatientsTable(patients) {
+  const tbody = document.getElementById("patients-tbody");
+  if (!tbody) return;
+
+  if (!patients || patients.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align:center; padding: 30px; color: var(--text-muted);">
+          No patient records found.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = patients.map(p => {
+    let badgeClass = "badge-success";
+    if (p.admissionStatus === "Admitted") badgeClass = "badge-danger";
+    if (p.admissionStatus === "Outpatient") badgeClass = "badge-dept";
+
+    return `
+      <tr id="pat-row-${p.id}">
+        <td><strong>${p.id}</strong></td>
+        <td>
+          <strong style="color: var(--dark-blue);">${p.name}</strong>
+          <div style="font-size: 12px; color: var(--text-muted);">Blood Group: ${p.bloodGroup || "N/A"}</div>
+        </td>
+        <td>${p.age} yrs / ${p.gender}</td>
+        <td><span class="badge badge-dept">${p.department}</span></td>
+        <td>${p.doctor}</td>
+        <td><span class="badge ${badgeClass}">${p.admissionStatus}</span></td>
+        <td style="color: var(--text-muted); font-size: 13px;">${p.lastVisit || "Recent"}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+// Appointments
+async function loadAppointments() {
+  let apts = null;
+  if (!isOfflineMode) {
+    try {
+      const res = await fetch("/api/appointments");
+      if (res.ok) {
+        apts = await res.json();
+        setLocalItem("hms_appointments", apts);
+      }
+    } catch (err) {
+      isOfflineMode = true;
+    }
+  }
+
+  if (!apts) {
+    apts = getLocalItem("hms_appointments", SEED_APPOINTMENTS);
+  }
+
+  currentAppointments = apts;
+  renderAppointmentsQueue(currentAppointments);
+}
+
+function renderAppointmentsQueue(appointmentsList) {
+  const container = document.getElementById("appointment-queue-container");
+  if (!container) return;
+
+  if (!appointmentsList || appointmentsList.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 30px; background: white; border-radius: 8px; border: 1px solid var(--border-color);">
+        <p style="color: var(--text-muted);">No appointments currently in the queue. Book your appointment above!</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = appointmentsList.map(apt => {
+    let statusClass = "status-confirmed";
+    if (apt.status === "Pending") statusClass = "status-pending";
+    const isNew = (apt.id === lastBookedAptId);
+
+    return `
+      <div class="queue-card ${statusClass} ${isNew ? 'highlight-recent-booked' : ''}" id="apt-card-${apt.id}">
+        <div class="queue-header">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="queue-token">${apt.token}</span>
+            ${isNew ? `<span class="badge" style="background: #0284c7; color: white; font-weight: 700;">✨ New Booking</span>` : ''}
+          </div>
+          <span class="badge ${apt.status === "Confirmed" ? "badge-success" : "badge-warning"}">
+            ${apt.status}
+          </span>
+        </div>
+        <div class="queue-body">
+          <h4>${apt.patientName}</h4>
+          <div class="queue-meta">
+            <span>🩺 <strong>${apt.department}</strong> - ${apt.doctorName}</span>
+            <span>📍 ${apt.room || "OPD"} | 🕒 ${apt.timeSlot}</span>
+            <span>📅 Date: <strong>${apt.date}</strong></span>
+            <span>📞 ${apt.phone}</span>
+          </div>
+        </div>
+        <div class="queue-actions">
+          ${apt.status !== "Completed" ? `
+            <button class="table-btn table-btn-primary" onclick="markAppointmentStatus('${apt.id}', 'Completed')">
+              ✓ Completed
+            </button>
+          ` : ""}
+          <button class="table-btn table-btn-danger" onclick="cancelAppointment('${apt.id}')">
+            Cancel
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+/* ==========================================================================
+   4. Event Listeners & Forms Submission
+   ========================================================================== */
+function initEventListeners() {
+  // Department filter buttons for Doctors
+  const docFilters = document.getElementById("doctor-dept-filters");
+  if (docFilters) {
+    docFilters.querySelectorAll(".filter-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        docFilters.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const dept = btn.getAttribute("data-dept");
+        const search = document.getElementById("doctor-search-input").value.trim();
+        loadDoctors(dept, search);
+      });
+    });
+  }
+
+  // Doctor search input with debounce
+  const docSearchInput = document.getElementById("doctor-search-input");
+  if (docSearchInput) {
+    let timeout;
+    docSearchInput.addEventListener("input", () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const activePill = document.querySelector("#doctor-dept-filters .filter-pill.active");
+        const dept = activePill ? activePill.getAttribute("data-dept") : "All";
+        loadDoctors(dept, docSearchInput.value.trim());
+      }, 250);
+    });
+  }
+
+  // Patient status filter buttons
+  const patFilters = document.getElementById("patient-status-filters");
+  if (patFilters) {
+    patFilters.querySelectorAll(".filter-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        patFilters.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const status = btn.getAttribute("data-status");
+        const search = document.getElementById("patient-search-input").value.trim();
+        loadPatients(status, search);
+      });
+    });
+  }
+
+  // Patient search input
+  const patSearchInput = document.getElementById("patient-search-input");
+  if (patSearchInput) {
+    let timeout;
+    patSearchInput.addEventListener("input", () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const activePill = document.querySelector("#patient-status-filters .filter-pill.active");
+        const status = activePill ? activePill.getAttribute("data-status") : "All";
+        loadPatients(status, patSearchInput.value.trim());
+      }, 250);
+    });
+  }
+
+  // Department change in Appointment Form dynamically filters doctors
+  const aptDept = document.getElementById("apt-department");
+  if (aptDept) {
+    aptDept.addEventListener("change", (e) => {
+      filterDoctorSelectByDept(e.target.value);
+    });
+  }
+
+  // Appointment Form Submit
+  const aptForm = document.getElementById("appointment-form") || document.getElementById("appointment-booking-form");
+  if (aptForm) {
+    aptForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById("btn-submit-appointment") || 
+                        document.getElementById("btn-submit-apt") || 
+                        aptForm.querySelector("button[type='submit']");
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span>⏳</span> Confirming...`;
+      }
+
+      const patientName = (document.getElementById("apt-patient-name")?.value || "").trim();
+      const phone = (document.getElementById("apt-phone")?.value || "").trim();
+      const email = (document.getElementById("apt-email")?.value || "").trim();
+      const department = document.getElementById("apt-department")?.value || "";
+      const doctorId = document.getElementById("apt-doctor")?.value || "";
+      const date = document.getElementById("apt-date")?.value || "";
+      const timeSlot = document.getElementById("apt-timeslot")?.value || "10:00 AM - 11:00 AM";
+      const notes = (document.getElementById("apt-notes")?.value || "").trim();
+
+      if (!patientName || !phone || !department || !date) {
+        showToast("Please fill all required fields (Name, Phone, Department, Date).", "danger");
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<span>📅</span> Confirm & Book Appointment`;
+        }
+        return;
+      }
+
+      const payload = {
+        patientName,
+        phone,
+        email,
+        department,
+        doctorId,
+        date,
+        timeSlot,
+        notes
+      };
+
+      let confirmedApt = null;
+      let successMessage = "";
+
+      if (!isOfflineMode) {
+        try {
+          const res = await fetch("/api/appointments", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (res.ok) {
+            confirmedApt = data.appointment;
+            successMessage = data.message;
+          } else {
+            console.warn("API response error:", data.error);
+          }
+        } catch (err) {
+          console.warn("Falling back to local mode:", err);
+          isOfflineMode = true;
+        }
+      }
+
+      // Offline / Client-Side Fallback Generation
+      if (!confirmedApt) {
+        const allDocs = getLocalItem("hms_doctors", SEED_DOCTORS);
+        let assignedDoc = allDocs.find(d => d.id === doctorId) || 
+                          allDocs.find(d => d.department.toLowerCase() === department.toLowerCase()) || 
+                          allDocs[0];
+        const allApts = getLocalItem("hms_appointments", SEED_APPOINTMENTS);
+        const tokenNum = allApts.length + 1;
+        const token = `TK-${tokenNum < 10 ? "0" + tokenNum : tokenNum}`;
+        const newId = `APT-${1000 + tokenNum}`;
+
+        confirmedApt = {
+          id: newId,
+          token: token,
+          patientName: patientName,
+          email: email || "",
+          phone: phone,
+          department: department,
+          doctorId: assignedDoc ? assignedDoc.id : "D101",
+          doctorName: assignedDoc ? assignedDoc.name : "Dr. Sharma",
+          date: date,
+          timeSlot: timeSlot || "10:00 AM - 11:00 AM",
+          status: "Confirmed",
+          notes: notes || "Routine Consultation",
+          room: assignedDoc ? assignedDoc.room : "OPD 01",
+          createdAt: new Date().toISOString()
+        };
+
+        allApts.unshift(confirmedApt);
+        setLocalItem("hms_appointments", allApts);
+        successMessage = `Appointment confirmed for ${patientName}! Your Token is ${token}.`;
+      }
+
+      // Track newest booking to highlight in Recent Bookings queue
+      lastBookedAptId = confirmedApt.id;
+
+      aptForm.reset();
+      initDateConstraints();
+      await loadAppointments();
+      await loadStats();
+      showToast(successMessage, "success");
+      showAppointmentConfirmation(confirmedApt);
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>📅</span> Confirm & Book Appointment`;
+      }
+    });
+  }
+
+  // Register Doctor Modal Open
+  const btnAddDoc = document.getElementById("btn-add-doctor-modal");
+  if (btnAddDoc) {
+    btnAddDoc.addEventListener("click", () => {
+      openModal("add-doctor-modal");
+    });
+  }
+
+  // Doctor Form Submit
+  const newDocForm = document.getElementById("new-doctor-form");
+  if (newDocForm) {
+    newDocForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById("doc-name").value.trim(),
+        department: document.getElementById("doc-dept").value,
+        contact: document.getElementById("doc-contact").value.trim(),
+        qualification: document.getElementById("doc-qualification").value.trim(),
+        room: document.getElementById("doc-room").value.trim()
+      };
+
+      let success = false;
+      if (!isOfflineMode) {
+        try {
+          const res = await fetch("/api/doctors", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            success = true;
+          }
+        } catch (err) {
+          isOfflineMode = true;
+        }
+      }
+
+      if (!success) {
+        const allDocs = getLocalItem("hms_doctors", SEED_DOCTORS);
+        const newId = `D${100 + allDocs.length + 1}`;
+        const newDoc = {
+          id: newId,
+          name: payload.name.startsWith("Dr.") ? payload.name : `Dr. ${payload.name}`,
+          department: payload.department,
+          contact: payload.contact,
+          email: `${newId.toLowerCase()}@cityhospital.com`,
+          qualification: payload.qualification || "MBBS, Specialist",
+          experience: "5+ yrs",
+          room: payload.room || `OPD ${allDocs.length + 1}`,
+          availableDays: ["Monday", "Wednesday", "Friday"],
+          availableTime: "10:00 AM - 02:00 PM",
+          rating: 4.8,
+          patientsCount: 10
+        };
+        allDocs.push(newDoc);
+        setLocalItem("hms_doctors", allDocs);
+      }
+
+      closeModal("add-doctor-modal");
+      newDocForm.reset();
+      loadDoctors();
+      loadStats();
+      showToast("Doctor registered successfully!", "success");
+    });
+  }
+
+  // Register Patient Modal Open
+  const btnAddPat = document.getElementById("btn-add-patient-modal");
+  if (btnAddPat) {
+    btnAddPat.addEventListener("click", () => {
+      openModal("add-patient-modal");
+    });
+  }
+
+  // Patient Form Submit
+  const newPatForm = document.getElementById("new-patient-form");
+  if (newPatForm) {
+    newPatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById("pat-name").value.trim(),
+        age: document.getElementById("pat-age").value,
+        gender: document.getElementById("pat-gender").value,
+        contact: document.getElementById("pat-contact").value.trim(),
+        department: document.getElementById("pat-dept").value,
+        bloodGroup: document.getElementById("pat-blood").value,
+        admissionStatus: document.getElementById("pat-status").value,
+        diagnosis: document.getElementById("pat-diagnosis").value.trim()
+      };
+
+      let success = false;
+      if (!isOfflineMode) {
+        try {
+          const res = await fetch("/api/patients", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            success = true;
+          }
+        } catch (err) {
+          isOfflineMode = true;
+        }
+      }
+
+      if (!success) {
+        const allPats = getLocalItem("hms_patients", SEED_PATIENTS);
+        const newId = `P${200 + allPats.length + 1}`;
+        const newPatient = {
+          id: newId,
+          name: payload.name,
+          age: parseInt(payload.age, 10) || 30,
+          gender: payload.gender || "Other",
+          contact: payload.contact,
+          email: "",
+          department: payload.department,
+          doctor: "General Duty Physician",
+          bloodGroup: payload.bloodGroup || "O+",
+          admissionStatus: payload.admissionStatus || "Outpatient",
+          diagnosis: payload.diagnosis || "Consultation requested",
+          lastVisit: new Date().toISOString().split("T")[0]
+        };
+        allPats.unshift(newPatient);
+        setLocalItem("hms_patients", allPats);
+      }
+
+      closeModal("add-patient-modal");
+      newPatForm.reset();
+      loadPatients();
+      loadStats();
+      showToast("Patient registered successfully!", "success");
+    });
+  }
+
+  // Contact Form Submit
+  const contactForm = document.getElementById("contact-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById("btn-submit-contact") || contactForm.querySelector("button[type='submit']");
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span>⏳</span> Dispatching to Email...`;
+      }
+
+      const name = (document.getElementById("contact-name")?.value || "").trim();
+      const email = (document.getElementById("contact-email")?.value || "").trim();
+      const phone = (document.getElementById("contact-phone")?.value || "").trim();
+      const department = document.getElementById("contact-dept")?.value || "General Inquiry";
+      const message = (document.getElementById("contact-msg")?.value || "").trim();
+
+      const recipientEmail = "helpdesk.cityhospital67@gmail.com";
+      const subject = `[City Hospital Inquiry] ${department} - ${name}`;
+      const emailBody = `Dear Hospital Helpdesk Team,
+
+A new inquiry has been submitted through the City Hospital portal:
+
+• Patient / Sender Name: ${name}
+• Email Address: ${email || "Not provided"}
+• Contact Phone: ${phone || "Not provided"}
+• Department: ${department}
+• Date & Time: ${new Date().toLocaleString()}
+
+--------------------------------------------------
+MESSAGE CONTENT:
+${message}
+--------------------------------------------------
+
+Campus Address: PFCV+GCR, Banamalipur, Kolkata, West Bengal 700124
+Google Maps Link: https://maps.app.goo.gl/e2f3cA1T92PnEbwC6
+Emergency Phone: 8910899945 | Helpdesk Desk: 8092814095
+Recipient: ${recipientEmail}`;
+
+      const payload = {
+        name,
+        email,
+        phone,
+        department,
+        message,
+        recipient: recipientEmail
+      };
+
+      try {
+        await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+      } catch (err) {
+        const savedMsgs = getLocalItem("hms_contact_messages", []);
+        savedMsgs.unshift({ ...payload, id: `MSG-${Date.now().toString().slice(-4)}`, date: new Date().toISOString() });
+        setLocalItem("hms_contact_messages", savedMsgs);
+      }
+
+      const mailtoUrl = `mailto:${encodeURIComponent(recipientEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+
+      // Attempt immediate mailto trigger
+      try {
+        const mailtoLink = document.createElement("a");
+        mailtoLink.href = mailtoUrl;
+        mailtoLink.target = "_blank";
+        mailtoLink.rel = "noopener noreferrer";
+        document.body.appendChild(mailtoLink);
+        mailtoLink.click();
+        document.body.removeChild(mailtoLink);
+      } catch (err) {
+        console.warn("Mailto link trigger fallback:", err);
+      }
+
+      showContactSuccessModal(name, recipientEmail, subject, emailBody, mailtoUrl, gmailUrl);
+      contactForm.reset();
+      showToast(`Inquiry prepared and dispatched to ${recipientEmail}!`, "success");
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>✉️</span> Send Message to Helpdesk`;
+      }
+    });
+  }
+}
+
+/* ==========================================================================
+   5. Appointment Status Actions (Cancel, Complete)
+   ========================================================================== */
+window.markAppointmentStatus = async function(id, newStatus) {
+  let success = false;
+  if (!isOfflineMode) {
+    try {
+      const res = await fetch(`/api/appointments/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (res.ok) success = true;
+    } catch (err) {
+      isOfflineMode = true;
+    }
+  }
+
+  if (!success) {
+    const allApts = getLocalItem("hms_appointments", SEED_APPOINTMENTS);
+    const target = allApts.find(a => a.id === id);
+    if (target) {
+      target.status = newStatus;
+      setLocalItem("hms_appointments", allApts);
+    }
+  }
+
+  loadAppointments();
+  loadStats();
+  showToast(`Appointment marked as ${newStatus}.`, "success");
+};
+
+window.cancelAppointment = async function(id) {
+  if (!confirm(`Are you sure you want to cancel appointment ${id}?`)) return;
+
+  let success = false;
+  if (!isOfflineMode) {
+    try {
+      const res = await fetch(`/api/appointments/${id}`, {
+        method: "DELETE"
+      });
+      if (res.ok) success = true;
+    } catch (err) {
+      isOfflineMode = true;
+    }
+  }
+
+  if (!success) {
+    const allApts = getLocalItem("hms_appointments", SEED_APPOINTMENTS);
+    const index = allApts.findIndex(a => a.id === id);
+    if (index !== -1) {
+      allApts.splice(index, 1);
+      setLocalItem("hms_appointments", allApts);
+    }
+  }
+
+  loadAppointments();
+  loadStats();
+  showToast(`Appointment ${id} has been cancelled.`, "success");
+};
+
+/* ==========================================================================
+   6. Modals & Digital Pass Display
+   ========================================================================== */
+window.openModal = function(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) modal.classList.add("active");
+};
+
+window.closeModal = function(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) modal.classList.remove("active");
+  if (modalId === "appointment-ticket-modal" && lastBookedAptId) {
+    setTimeout(() => {
+      const card = document.getElementById(`apt-card-${lastBookedAptId}`);
+      if (card) {
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 150);
+  }
+};
+
+window.viewInRecentBookings = function(aptId) {
+  closeModal("appointment-ticket-modal");
+  const targetId = aptId || lastBookedAptId;
+  setTimeout(() => {
+    const card = targetId ? document.getElementById(`apt-card-${targetId}`) : null;
+    const feed = document.querySelector(".appointments-feed") || document.getElementById("appointment-queue-container");
+    if (card) {
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      card.classList.add("highlight-recent-booked");
+    } else if (feed) {
+      feed.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, 200);
+};
+
+function showAppointmentConfirmation(apt) {
+  document.getElementById("pass-token").textContent = apt.token;
+  document.getElementById("pass-patient").textContent = apt.patientName;
+  document.getElementById("pass-id").textContent = apt.id;
+  document.getElementById("pass-dept").textContent = apt.department;
+  document.getElementById("pass-doctor").textContent = apt.doctorName;
+  document.getElementById("pass-room").textContent = apt.room || "OPD 01";
+  document.getElementById("pass-date").textContent = `${apt.date} (${apt.timeSlot})`;
+
+  openModal("appointment-ticket-modal");
+}
+
+let currentContactEmailBody = "";
+
+function showContactSuccessModal(name, recipient, subject, body, mailtoUrl, gmailUrl) {
+  currentContactEmailBody = body;
+  const subjEl = document.getElementById("contact-modal-subject");
+  const bodyEl = document.getElementById("contact-modal-body");
+  const gmailBtn = document.getElementById("btn-open-gmail-web");
+  const mailBtn = document.getElementById("btn-open-default-mail");
+
+  if (subjEl) subjEl.textContent = subject;
+  if (bodyEl) bodyEl.textContent = body;
+  if (gmailBtn) gmailBtn.href = gmailUrl;
+  if (mailBtn) mailBtn.href = mailtoUrl;
+
+  openModal("contact-success-modal");
+}
+
+window.copyContactMessageText = async function() {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(currentContactEmailBody);
+    } else {
+      const textarea = document.createElement("textarea");
+      textarea.value = currentContactEmailBody;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
+    showToast("Message text copied to clipboard!", "success");
+  } catch (err) {
+    showToast("Please copy text directly from the message box.", "danger");
+  }
+};
+
+/* Close modals on overlay click */
+document.querySelectorAll(".modal-overlay").forEach(overlay => {
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove("active");
+    }
+  });
+});
+
+/* ==========================================================================
+   7. Toast Notification System
+   ========================================================================== */
+function showToast(message, type = "success") {
+  const container = document.getElementById("toast-container");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  toast.innerHTML = `
+    <span>${type === "success" ? "✓" : "⚠️"}</span>
+    <span>${message}</span>
+  `;
+
+  container.appendChild(toast);
+
+  // Trigger entering animation
+  requestAnimationFrame(() => {
+    toast.classList.add("show");
+  });
+
+  // Auto remove
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => {
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }, 350);
+  }, 4000);
+}
+
+</script>
+</body>
+</html>

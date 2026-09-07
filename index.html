@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hospital Management System</title>
+  <meta name="description" content="Healthcare & Patient Management Portal with 3D card hover effects, appointment booking, doctor schedules, patient records, and full JavaScript backend." />
+  <meta property="og:title" content="Hospital Management System" />
+  <meta property="og:description" content="Healthcare & Patient Management Portal with 3D card hover effects, appointment booking, doctor schedules, patient records, and full JavaScript backend." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  
+  <!-- Font and Stylesheet in pure CSS -->
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+
+  <!-- Top Emergency & Status Bar -->
+  <div class="top-bar" id="top-bar">
+    <div class="top-bar-item">
+      <span class="pulse-dot"></span>
+      <span><strong>Live Hospital System</strong>: OPD & Emergency Services Active 24/7</span>
+    </div>
+    <div class="top-bar-item">
+      <span>📞 Emergency: <a href="tel:8910899945" style="color: white; font-weight: 700; text-decoration: none;">8910899945</a></span>
+      <span style="margin: 0 8px; opacity: 0.5;">|</span>
+      <span>Desk: <a href="tel:8092814095" style="color: white; font-weight: 700; text-decoration: none;">8092814095</a></span>
+      <span style="margin: 0 8px; opacity: 0.5;">|</span>
+      <span>📍 <a href="https://maps.app.goo.gl/e2f3cA1T92PnEbwC6" target="_blank" rel="noopener noreferrer" style="color: white; font-weight: 600; text-decoration: underline;" title="Open in Google Maps">PFCV+GCR, Banamalipur, Kolkata, West Bengal 700124</a></span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="main-header">
+    <h1>
+      <span>🏥</span>
+      <span>Hospital Management System</span>
+    </h1>
+    <p>Healthcare & Patient Management Portal</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav id="main-nav">
+    <div class="nav-container">
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">☰</button>
+      <div class="nav-links" id="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#services">Services</a>
+        <a href="#doctors">Doctors</a>
+        <a href="#patients">Patients</a>
+        <a href="#appointments">Appointments</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-badge-btn" id="btn-quick-book" onclick="document.getElementById('appointments').scrollIntoView({behavior: 'smooth'})">
+          + Book Appointment
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <span class="hero-badge">⭐ Certified Multidisciplinary Care</span>
+      <h1>Welcome to City Hospital</h1>
+      <p>Providing Quality Healthcare Services with compassion, modern technology, and renowned medical experts.</p>
+      <div class="hero-actions">
+        <a href="#appointments" class="btn-hero-primary" id="hero-book-btn">
+          <span>📅</span> Book Appointment
+        </a>
+        <a href="#doctors" class="btn-hero-secondary" id="hero-doctors-btn">
+          <span>👨‍⚕️</span> View Specialists
+        </a>
+        <a href="#patients" class="btn-hero-secondary" id="hero-patients-btn">
+          <span>📋</span> Patient Records
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3D Floating Stats Bar -->
+  <div class="stats-bar-wrapper">
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat-box" id="stat-doctors">
+        <div class="stat-icon">👨‍⚕️</div>
+        <div class="stat-info">
+          <h3 id="stat-doctor-count">6</h3>
+          <p>Specialist Doctors</p>
+        </div>
+      </div>
+      <div class="stat-box" id="stat-patients">
+        <div class="stat-icon">🩺</div>
+        <div class="stat-info">
+          <h3 id="stat-patient-count">4</h3>
+          <p>Active Patient Records</p>
+        </div>
+      </div>
+      <div class="stat-box" id="stat-appointments">
+        <div class="stat-icon">📅</div>
+        <div class="stat-info">
+          <h3 id="stat-apt-count">3</h3>
+          <p>Booked Appointments</p>
+        </div>
+      </div>
+      <div class="stat-box" id="stat-beds">
+        <div class="stat-icon">🛏️</div>
+        <div class="stat-info">
+          <h3 id="stat-bed-count">42</h3>
+          <p>Available Beds (24/7)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- HOSPITAL SERVICES with 3D TILT EFFECT -->
+    <section id="services" style="padding-top: 20px;">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Hospital Services</h2>
+        <p class="section-subtitle">Comprehensive digital workflow for staff, physicians, and patients</p>
+      </div>
+
+      <div class="cards-perspective-container">
+        <div class="cards">
+          <!-- Card 1: Patient Records -->
+          <div class="card-3d-wrap" data-tilt>
+            <div class="card" id="card-service-patients">
+              <div class="card-glare"></div>
+              <div class="card-icon-wrap">📋</div>
+              <h3>Patient Records</h3>
+              <p>Manage patient admission files, medical histories, diagnosis records, and prescription notes securely.</p>
+              <button class="card-btn" onclick="document.getElementById('patients').scrollIntoView({behavior: 'smooth'})">
+                Access Records &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: Doctor Management -->
+          <div class="card-3d-wrap" data-tilt>
+            <div class="card" id="card-service-doctors">
+              <div class="card-glare"></div>
+              <div class="card-icon-wrap">👨‍⚕️</div>
+              <h3>Doctor Management</h3>
+              <p>Track doctor availability schedules, specialty departments, OPD consultation timings, and room numbers.</p>
+              <button class="card-btn" onclick="document.getElementById('doctors').scrollIntoView({behavior: 'smooth'})">
+                View Roster &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3: Appointment Booking -->
+          <div class="card-3d-wrap" data-tilt>
+            <div class="card" id="card-service-appointments">
+              <div class="card-glare"></div>
+              <div class="card-icon-wrap">🕒</div>
+              <h3>Appointment Booking</h3>
+              <p>Book instant doctor consultations online, generate digital tokens, and manage scheduled visit queues.</p>
+              <button class="card-btn" onclick="document.getElementById('appointments').scrollIntoView({behavior: 'smooth'})">
+                Book Visit &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOCTOR LIST SECTION -->
+    <section id="doctors" style="margin-top: 60px;">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Doctor List</h2>
+        <p class="section-subtitle">Browse and filter verified medical specialists across departments</p>
+      </div>
+
+      <!-- Toolbar: Filter Pills and Live Search -->
+      <div class="toolbar-wrap">
+        <div class="filter-pills" id="doctor-dept-filters">
+          <button class="filter-pill active" data-dept="All">All Departments</button>
+          <button class="filter-pill" data-dept="Cardiology">Cardiology</button>
+          <button class="filter-pill" data-dept="Neurology">Neurology</button>
+          <button class="filter-pill" data-dept="Orthopedics">Orthopedics</button>
+          <button class="filter-pill" data-dept="Pediatrics">Pediatrics</button>
+          <button class="filter-pill" data-dept="General Medicine">General Medicine</button>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="doctor-search-input" placeholder="Search doctor or dept..." />
+          </div>
+          <button class="action-btn-sm" id="btn-add-doctor-modal">
+            <span>+</span> Add Doctor
+          </button>
+        </div>
+      </div>
+
+      <!-- Doctor Table with 3D Hover Rows -->
+      <div class="table-responsive">
+        <table id="doctors-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Doctor Name</th>
+              <th>Department</th>
+              <th>OPD Room</th>
+              <th>Contact</th>
+              <th>Schedule</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="doctors-tbody">
+            <!-- Dynamically populated from backend -->
+            <tr>
+              <td colspan="7" style="text-align:center; padding: 25px; color: var(--text-muted);">
+                Loading doctors from server...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PATIENT RECORDS SECTION -->
+    <section id="patients" style="margin-top: 60px;">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Patient Records</h2>
+        <p class="section-subtitle">Real-time clinical admissions, diagnosis notes, and patient tracking</p>
+      </div>
+
+      <div class="toolbar-wrap">
+        <div class="filter-pills" id="patient-status-filters">
+          <button class="filter-pill active" data-status="All">All Patients</button>
+          <button class="filter-pill" data-status="Outpatient">Outpatient</button>
+          <button class="filter-pill" data-status="Admitted">Admitted</button>
+          <button class="filter-pill" data-status="Discharged">Discharged</button>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="patient-search-input" placeholder="Search patient name or ID..." />
+          </div>
+          <button class="action-btn-sm" id="btn-add-patient-modal">
+            <span>+</span> Register Patient
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table id="patients-table">
+          <thead>
+            <tr>
+              <th>Patient ID</th>
+              <th>Full Name</th>
+              <th>Age / Gender</th>
+              <th>Department</th>
+              <th>Attending Doctor</th>
+              <th>Status</th>
+              <th>Last Visit</th>
+            </tr>
+          </thead>
+          <tbody id="patients-tbody">
+            <!-- Dynamically populated from backend -->
+            <tr>
+              <td colspan="7" style="text-align:center; padding: 25px; color: var(--text-muted);">
+                Loading patient records...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BOOK APPOINTMENT SECTION -->
+    <section id="appointments" class="form-section">
+      <div class="section-title-wrap" style="margin-bottom: 25px;">
+        <h2 class="section-title">Book Appointment</h2>
+        <p class="section-subtitle">Fill in the patient details to reserve an OPD slot and generate your appointment pass</p>
+      </div>
+
+      <form id="appointment-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="apt-patient-name">Patient Name <span>*</span></label>
+            <input type="text" id="apt-patient-name" placeholder="e.g. John Doe" required />
+          </div>
+
+          <div class="form-group">
+            <label for="apt-email">Email Address <span>*</span></label>
+            <input type="email" id="apt-email" placeholder="e.g. john.doe@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="apt-phone">Phone Number <span>*</span></label>
+            <input type="tel" id="apt-phone" placeholder="e.g. 9876543210" minlength="7" maxlength="15" required />
+          </div>
+
+          <div class="form-group">
+            <label for="apt-department">Select Department <span>*</span></label>
+            <select id="apt-department" required>
+              <option value="">-- Choose Department --</option>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Neurology">Neurology</option>
+              <option value="Orthopedics">Orthopedics</option>
+              <option value="Pediatrics">Pediatrics</option>
+              <option value="General Medicine">General Medicine</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="apt-doctor">Select Preferred Doctor</label>
+            <select id="apt-doctor">
+              <option value="">-- Any Available Specialist --</option>
+              <!-- Dynamically populated based on chosen department -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="apt-date">Appointment Date <span>*</span></label>
+            <input type="date" id="apt-date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="apt-timeslot">Preferred Time Slot</label>
+            <select id="apt-timeslot">
+              <option value="09:00 AM - 10:00 AM">09:00 AM - 10:00 AM</option>
+              <option value="10:00 AM - 11:00 AM" selected>10:00 AM - 11:00 AM</option>
+              <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
+              <option value="02:00 PM - 03:00 PM">02:00 PM - 03:00 PM</option>
+              <option value="03:00 PM - 04:00 PM">03:00 PM - 04:00 PM</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="apt-notes">Symptoms / Notes (Optional)</label>
+            <textarea id="apt-notes" placeholder="Briefly describe symptoms or reason for visit..."></textarea>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 25px;">
+          <button type="submit" id="btn-submit-appointment">
+            <span>📅</span> Confirm & Book Appointment
+          </button>
+        </div>
+      </form>
+
+      <!-- Current Scheduled Appointments Queue Feed -->
+      <div class="appointments-feed">
+        <div class="section-header-actions" style="margin-top: 40px;">
+          <h3 style="color: var(--dark-blue); font-size: 20px;">
+            📋 Recent Bookings & OPD Schedule
+          </h3>
+          <span style="font-size: 13px; color: var(--text-muted);">
+            Live sync with hospital dispatch
+          </span>
+        </div>
+
+        <div class="queue-grid" id="appointment-queue-container">
+          <!-- Dynamically populated from backend -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" style="margin-top: 60px;">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Contact & Helpdesk</h2>
+        <p class="section-subtitle">Reach out to our patient helpdesk or request assistance</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info-card">
+          <div>
+            <h3>City Hospital Campus</h3>
+            <p style="color: #bae6fd; font-size: 14px;">
+              24-Hour Medical Care, Trauma Center & Specialized Diagnostic Labs
+            </p>
+
+            <ul class="contact-info-list">
+              <li class="contact-item">
+                <span class="contact-icon">📍</span>
+                <div>
+                  <strong>Address & Map Location</strong>
+                  <p style="color: #e0f2fe; font-size: 13px;">PFCV+GCR, Banamalipur, Kolkata, West Bengal 700124</p>
+                  <a href="https://maps.app.goo.gl/e2f3cA1T92PnEbwC6" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; font-size: 12px; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px; margin-top: 3px; font-weight: 600;">
+                    📍 Open in Google Maps (maps.app.goo.gl/e2f3cA1T92PnEbwC6) ↗
+                  </a>
+                </div>
+              </li>
+              <li class="contact-item">
+                <span class="contact-icon">📞</span>
+                <div>
+                  <strong>Phone Lines</strong>
+                  <p style="color: #e0f2fe; font-size: 13px;">
+                    Emergency: <a href="tel:8910899945" style="color: #ffffff; font-weight: 700; text-decoration: underline;">8910899945</a><br />
+                    Desk: <a href="tel:8092814095" style="color: #ffffff; font-weight: 700; text-decoration: underline;">8092814095</a>
+                  </p>
+                </div>
+              </li>
+              <li class="contact-item">
+                <span class="contact-icon">✉️</span>
+                <div>
+                  <strong>Helpdesk Email</strong>
+                  <p style="color: #e0f2fe; font-size: 13px;">
+                    <a href="mailto:helpdesk.cityhospital67@gmail.com" style="color: #ffffff; font-weight: 700; text-decoration: underline;">helpdesk.cityhospital67@gmail.com</a>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="contact-hours-box">
+            <strong>Operating Hours:</strong><br />
+            Emergency & Inpatient Care: 24/7/365<br />
+            OPD Doctor Consultations: Mon - Sat, 08:30 AM to 06:00 PM
+          </div>
+        </div>
+
+        <!-- Contact / Query Form -->
+        <div style="background: white; padding: 30px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-md);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <h3 style="color: var(--dark-blue); font-size: 20px;">Send Us a Message</h3>
+            <span style="background: #e0f2fe; color: var(--deep-blue); font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 12px;">Direct Email Dispatch</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+            Your inquiry will be sent directly to <strong>helpdesk.cityhospital67@gmail.com</strong>
+          </p>
+          <form id="contact-form">
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label for="contact-name">Full Name <span>*</span></label>
+              <input type="text" id="contact-name" placeholder="Your name" required />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label for="contact-email">Email Address <span>*</span></label>
+              <input type="email" id="contact-email" placeholder="your.email@example.com" required />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label for="contact-phone">Phone Number (Optional)</label>
+              <input type="tel" id="contact-phone" placeholder="e.g. 9876543210" />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label for="contact-dept">Department of Inquiry</label>
+              <select id="contact-dept">
+                <option value="General Inquiry">General Inquiry</option>
+                <option value="Emergency & Trauma">Emergency & Trauma Care</option>
+                <option value="Billing & Insurance">Billing & Insurance</option>
+                <option value="Diagnostic Lab & Diagnostics">Diagnostic Lab & Blood Bank</option>
+                <option value="Doctor Availability & Appointments">Doctor Availability & Appointments</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 18px;">
+              <label for="contact-msg">Message <span>*</span></label>
+              <textarea id="contact-msg" placeholder="How can our healthcare team assist you today?" required></textarea>
+            </div>
+
+            <button type="submit" id="btn-submit-contact" style="width: 100%;">
+              <span>✉️</span> Send Message to Helpdesk
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Google Maps Interactive Location Card -->
+      <div style="margin-top: 30px; background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); overflow: hidden; box-shadow: var(--shadow-md);">
+        <div style="padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--border-color); background: #f8fafc;">
+          <div>
+            <h4 style="color: var(--dark-blue); font-size: 17px; margin-bottom: 3px; display: flex; align-items: center; gap: 8px;">
+              <span>📍</span> Hospital Google Maps Location
+            </h4>
+            <p style="font-size: 13px; color: var(--text-muted); margin: 0;">
+              PFCV+GCR, Banamalipur, Kolkata, West Bengal 700124 (Barasat Govt Medical College & Hospital)
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="https://maps.app.goo.gl/e2f3cA1T92PnEbwC6" target="_blank" rel="noopener noreferrer" class="btn-action-primary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-size: 13px; padding: 8px 15px;">
+              <span>🗺️</span> Open Google Maps Link (e2f3cA1T92PnEbwC6) ↗
+            </a>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=22.7213517,88.4935013" target="_blank" rel="noopener noreferrer" class="btn-action-secondary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-size: 13px; padding: 8px 15px;">
+              <span>🧭</span> Get Directions
+            </a>
+          </div>
+        </div>
+        <div style="width: 100%; height: 350px; position: relative; background: #e2e8f0;">
+          <iframe
+            id="hospital-google-map"
+            title="Hospital Google Map Location"
+            src="https://maps.google.com/maps?q=22.7213517,88.4935013&hl=en&z=16&output=embed"
+            width="100%"
+            height="100%"
+            style="border: 0; display: block;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- MODAL 1: 3D Appointment Confirmation Ticket Pass -->
+  <div class="modal-overlay" id="appointment-ticket-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Appointment Confirmed</h3>
+        <button class="modal-close" onclick="closeModal('appointment-ticket-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="appointment-pass-card">
+          <span class="pass-badge">✓ Booking Confirmed</span>
+          <div class="pass-token" id="pass-token">TK-04</div>
+          <div class="pass-token-label">Queue Token Number</div>
+
+          <div class="pass-details-grid">
+            <div>
+              <strong>Patient Name:</strong>
+              <span id="pass-patient">John Doe</span>
+            </div>
+            <div>
+              <strong>Appointment ID:</strong>
+              <span id="pass-id">APT-1004</span>
+            </div>
+            <div>
+              <strong>Department:</strong>
+              <span id="pass-dept">Cardiology</span>
+            </div>
+            <div>
+              <strong>Doctor:</strong>
+              <span id="pass-doctor">Dr. Sharma</span>
+            </div>
+            <div>
+              <strong>Room Number:</strong>
+              <span id="pass-room">OPD 12</span>
+            </div>
+            <div>
+              <strong>Date & Slot:</strong>
+              <span id="pass-date">2026-09-08 (10:00 AM)</span>
+            </div>
+          </div>
+
+          <div class="qr-code-box">
+            <span>[QR CODE]</span>
+          </div>
+          <p style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
+            Please present this token at the reception counter 15 mins prior to your slot.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; flex-wrap: wrap;">
+          <button class="action-btn-sm" onclick="window.print()" style="background: var(--text-main);">
+            🖨️ Print Pass
+          </button>
+          <button class="action-btn-sm" onclick="viewInRecentBookings()" style="background: var(--primary-blue);">
+            📋 View in Recent Bookings
+          </button>
+          <button class="action-btn-sm" onclick="closeModal('appointment-ticket-modal')">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Add New Doctor Modal -->
+  <div class="modal-overlay" id="add-doctor-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Register New Doctor</h3>
+        <button class="modal-close" onclick="closeModal('add-doctor-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="new-doctor-form">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="doc-name">Doctor Name <span>*</span></label>
+            <input type="text" id="doc-name" placeholder="e.g. Dr. Kavita Nair" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="doc-dept">Department <span>*</span></label>
+            <select id="doc-dept" required>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Neurology">Neurology</option>
+              <option value="Orthopedics">Orthopedics</option>
+              <option value="Pediatrics">Pediatrics</option>
+              <option value="General Medicine">General Medicine</option>
+              <option value="Dermatology">Dermatology</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="doc-contact">Contact Number <span>*</span></label>
+            <input type="tel" id="doc-contact" placeholder="e.g. 9876543219" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="doc-qualification">Qualification / Degrees</label>
+            <input type="text" id="doc-qualification" placeholder="e.g. MBBS, MD, Specialist" />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="doc-room">OPD Room Number</label>
+            <input type="text" id="doc-room" placeholder="e.g. OPD 16" />
+          </div>
+
+          <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+            <button type="button" class="card-btn" onclick="closeModal('add-doctor-modal')">Cancel</button>
+            <button type="submit" class="action-btn-sm">+ Save Doctor</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Add New Patient Modal -->
+  <div class="modal-overlay" id="add-patient-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Register New Patient</h3>
+        <button class="modal-close" onclick="closeModal('add-patient-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="new-patient-form">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="pat-name">Patient Full Name <span>*</span></label>
+            <input type="text" id="pat-name" placeholder="e.g. Suman Roy" required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+            <div class="form-group">
+              <label for="pat-age">Age <span>*</span></label>
+              <input type="number" id="pat-age" min="1" max="120" placeholder="e.g. 35" required />
+            </div>
+            <div class="form-group">
+              <label for="pat-gender">Gender</label>
+              <select id="pat-gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="pat-contact">Contact Phone <span>*</span></label>
+            <input type="tel" id="pat-contact" placeholder="e.g. 9812345678" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="pat-dept">Department <span>*</span></label>
+            <select id="pat-dept" required>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Neurology">Neurology</option>
+              <option value="Orthopedics">Orthopedics</option>
+              <option value="Pediatrics">Pediatrics</option>
+              <option value="General Medicine">General Medicine</option>
+            </select>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+            <div class="form-group">
+              <label for="pat-blood">Blood Group</label>
+              <select id="pat-blood">
+                <option value="O+">O+</option>
+                <option value="A+">A+</option>
+                <option value="B+">B+</option>
+                <option value="AB+">AB+</option>
+                <option value="O-">O-</option>
+                <option value="A-">A-</option>
+                <option value="B-">B-</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="pat-status">Admission Status</label>
+              <select id="pat-status">
+                <option value="Outpatient">Outpatient</option>
+                <option value="Admitted">Admitted</option>
+                <option value="Discharged">Discharged</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="pat-diagnosis">Preliminary Diagnosis / Notes</label>
+            <input type="text" id="pat-diagnosis" placeholder="e.g. Routine consultation, follow-up" />
+          </div>
+
+          <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+            <button type="button" class="card-btn" onclick="closeModal('add-patient-modal')">Cancel</button>
+            <button type="submit" class="action-btn-sm">+ Save Patient Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Message Sent to Helpdesk Confirmation -->
+  <div class="modal-overlay" id="contact-success-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>✉️ Message Dispatched to Helpdesk</h3>
+        <button class="modal-close" onclick="closeModal('contact-success-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="text-align: center; margin-bottom: 18px;">
+          <div style="font-size: 36px; margin-bottom: 6px;">📬</div>
+          <h4 style="color: var(--dark-blue); font-size: 18px; margin-bottom: 6px;">Inquiry Dispatched</h4>
+          <p style="color: var(--text-muted); font-size: 13px;">Your message has been addressed directly to our official hospital helpdesk:</p>
+          <div style="display: inline-block; background: #e0f2fe; color: var(--deep-blue); font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 14px; margin-top: 6px; border: 1px solid #bae6fd;">
+            helpdesk.cityhospital67@gmail.com
+          </div>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 18px;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px;">Subject:</div>
+          <div id="contact-modal-subject" style="font-size: 13px; font-weight: 600; color: var(--dark-blue); margin-bottom: 10px;"></div>
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px;">Message Text:</div>
+          <div id="contact-modal-body" style="font-size: 12px; color: var(--text-main); white-space: pre-wrap; line-height: 1.4; max-height: 140px; overflow-y: auto; background: #ffffff; padding: 10px; border-radius: 4px; border: 1px solid #e2e8f0;"></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a id="btn-open-gmail-web" href="#" target="_blank" rel="noopener noreferrer" class="btn-action-primary" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; text-align: center;">
+            <span>🚀</span> Send Directly via Gmail (Web)
+          </a>
+          <a id="btn-open-default-mail" href="#" class="btn-action-secondary" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; text-align: center;">
+            <span>✉️</span> Open Default Mail Client
+          </a>
+          <button class="btn-action-secondary" type="button" onclick="copyContactMessageText()">
+            <span>📋</span> Copy Formatted Message to Clipboard
+          </button>
+          <button class="action-btn-sm" type="button" onclick="closeModal('contact-success-modal')" style="margin-top: 4px; width: 100%;">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h4>City Hospital Management System</h4>
+        <p>Providing Excellence in Modern Medical Care, OPD Consultations & Diagnostics</p>
+      </div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#doctors">Doctors</a>
+        <a href="#patients">Patients</a>
+        <a href="#appointments">Appointments</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Hospital Management System | All Rights Reserved</p>
+    </div>
+  </footer>
+
+  <!-- Application Logic in Pure JavaScript -->
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
